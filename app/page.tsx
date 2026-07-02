@@ -1,65 +1,251 @@
-import Image from "next/image";
+"use client";
 
-export default function Home() {
+import Link from "next/link";
+import { useState,useEffect } from "react";
+import {
+  Activity,
+  Bell,
+  ShieldCheck,
+  Timer,
+  BarChart3,
+  Globe,
+} from "lucide-react";
+
+import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
+import { Button } from "@/components/ui/button";
+
+export default function HomePage() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+useEffect(() => {
+  const token = localStorage.getItem("token");
+  setIsLoggedIn(!!token);
+}, []);
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+    <main className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-indigo-950 text-white">
+
+      <Navbar />
+
+      {/* HERO */}
+      <section className="max-w-7xl mx-auto px-6 py-24">
+
+        <div className="grid lg:grid-cols-2 gap-16 items-center">
+
+          {/* LEFT */}
+
+          <div>
+
+            <div className="inline-flex items-center gap-2 rounded-full border border-cyan-500/30 bg-cyan-500/10 px-4 py-2 text-cyan-300 mb-6">
+
+              <Activity className="h-4 w-4" />
+
+              API Monitoring Platform
+
+            </div>
+
+            <h1 className="text-5xl lg:text-6xl font-extrabold leading-tight">
+
+              Monitor your APIs
+
+              <span className="block bg-gradient-to-r from-cyan-400 to-violet-400 bg-clip-text text-transparent">
+
+                in Real Time
+
+              </span>
+
+            </h1>
+
+            <p className="mt-8 text-lg text-slate-300 leading-8">
+
+              Track uptime, response time, receive instant email alerts
+              and monitor all your APIs from one beautiful dashboard.
+
+            </p>
+
+            <div className="flex gap-4 mt-10">
+
+             <Link href={isLoggedIn ? "/dashboard" : "/signup"}>
+  <Button className="h-12 px-8 bg-cyan-500 hover:bg-cyan-600">
+    {isLoggedIn ? "Go to Dashboard" : "Get Started"}
+  </Button>
+</Link>
+
+              {!isLoggedIn && (
+  <Link href="/login">
+    <Button
+      variant="outline"
+      className="h-12 px-8 border-slate-700 bg-slate-900 hover:bg-slate-800"
+    >
+      Login
+    </Button>
+  </Link>
+)}
+
+            </div>
+
+          </div>
+
+          {/* RIGHT */}
+
+          <div>
+
+            <div className="rounded-3xl border border-slate-800 bg-slate-900/70 backdrop-blur-xl p-8 shadow-2xl">
+
+              <h2 className="text-xl font-bold mb-6">
+                Dashboard Preview
+              </h2>
+
+              <div className="space-y-4">
+
+                <div className="flex justify-between rounded-xl bg-slate-800 p-4">
+
+                  <span>User Service</span>
+
+                  <span className="text-green-400 font-semibold">
+                    UP
+                  </span>
+
+                </div>
+
+                <div className="flex justify-between rounded-xl bg-slate-800 p-4">
+
+                  <span>Payment API</span>
+
+                  <span className="text-green-400 font-semibold">
+                    143 ms
+                  </span>
+
+                </div>
+
+                <div className="flex justify-between rounded-xl bg-slate-800 p-4">
+
+                  <span>Email Service</span>
+
+                  <span className="text-red-400 font-semibold">
+                    DOWN
+                  </span>
+
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </section>
+
+      {/* FEATURES */}
+
+      <section className="max-w-7xl mx-auto px-6 pb-24">
+
+        <h2 className="text-4xl font-bold text-center mb-14">
+
+          Everything you need
+
+        </h2>
+
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+          <FeatureCard
+            icon={<Globe className="h-8 w-8 text-cyan-400" />}
+            title="Real-Time Monitoring"
+            desc="Continuously monitor your APIs and websites."
+          />
+
+          <FeatureCard
+            icon={<Timer className="h-8 w-8 text-cyan-400" />}
+            title="Response Time"
+            desc="Measure latency and monitor performance."
+          />
+
+          <FeatureCard
+            icon={<Bell className="h-8 w-8 text-cyan-400" />}
+            title="Email Alerts"
+            desc="Receive instant downtime notifications."
+          />
+
+          <FeatureCard
+            icon={<BarChart3 className="h-8 w-8 text-cyan-400" />}
+            title="Logs"
+            desc="View monitoring history and response logs."
+          />
+
+          <FeatureCard
+            icon={<ShieldCheck className="h-8 w-8 text-cyan-400" />}
+            title="Secure Login"
+            desc="Email authentication and Google Sign-In."
+          />
+
+          <FeatureCard
+            icon={<Activity className="h-8 w-8 text-cyan-400" />}
+            title="Beautiful Dashboard"
+            desc="Manage all monitors from one place."
+          />
+
+        </div>
+
+      </section>
+
+      {/* CTA */}
+
+      <section className="px-6 pb-24">
+
+        <div className="max-w-5xl mx-auto rounded-3xl bg-gradient-to-r from-cyan-600 to-violet-700 p-12 text-center">
+
+          <h2 className="text-4xl font-bold">
+
+            Ready to monitor your APIs?
+
+          </h2>
+
+          <p className="mt-5 text-cyan-100">
+
+            Create your account and start tracking your services in minutes.
+
           </p>
+
+          <Link href={isLoggedIn ? "/dashboard" : "/signup"}>
+  <Button className="mt-8 bg-white text-slate-900 hover:bg-slate-200 px-8 h-12">
+    {isLoggedIn ? "Open Dashboard" : "Start Monitoring"}
+  </Button>
+</Link>
+
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
+
+      </section>
+
+      <Footer />
+
+    </main>
+  );
+}
+
+function FeatureCard({
+  icon,
+  title,
+  desc,
+}: {
+  icon: React.ReactNode;
+  title: string;
+  desc: string;
+}) {
+  return (
+    <div className="rounded-3xl border border-slate-800 bg-slate-900/70 p-8 hover:border-cyan-500 transition">
+
+      {icon}
+
+      <h3 className="text-2xl font-bold mt-6">
+        {title}
+      </h3>
+
+      <p className="mt-3 text-slate-400">
+        {desc}
+      </p>
+
     </div>
   );
 }
