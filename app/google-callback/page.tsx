@@ -18,7 +18,7 @@ export default function GoogleCallbackPage() {
 
       try {
         const res = await axios.post(
-          `http://localhost:5001/api/auth/google-login`,
+          `${process.env.NEXT_PUBLIC_API_URL}/api/auth/google-login`,
           {
             email: session?.user?.email,
             name: session?.user?.name,

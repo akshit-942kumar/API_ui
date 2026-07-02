@@ -31,7 +31,7 @@ export default function SignupPage() {
     useState<boolean>(false);
 
   const handleSignup = async (
-    e: React.FormEvent<HTMLFormElement>
+    e: React.SyntheticEvent<HTMLFormElement>
   ) => {
     e.preventDefault();
 
@@ -53,7 +53,7 @@ export default function SignupPage() {
       );
 
       router.push(
-        `/verify-otp?email=${email}`
+        `/verifyotp?email=${email}`
       );
     } catch (error: any) {
       toast.error(
