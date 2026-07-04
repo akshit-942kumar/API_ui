@@ -23,7 +23,7 @@ export default function VerifyOtpClient() {
     useState<boolean>(false);
 
   const handleVerify = async (
-    e: React.FormEvent<HTMLFormElement>
+    e: React.SyntheticEvent<HTMLFormElement>
   ) => {
     e.preventDefault();
 

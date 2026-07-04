@@ -13,6 +13,7 @@ import StatCard from "../components/Statcard";
 import MonitorCard from "../components/MonitorCard";
 import Footer from "../components/Footer";
 
+
 interface Monitor {
   _id: string;
   name: string;
@@ -32,7 +33,7 @@ export default function DashboardPage() {
 // console.log("monitors:",monitors);
 
   const fetchMonitors = async () => {
-     
+     console.count("fetchMonitors");
 
     const token = localStorage.getItem("token");
 // console.log("localstorage token:",token)
@@ -133,6 +134,7 @@ useEffect(() => {
     }
   };
 
+  
   useEffect(() => {
     if (status === "loading") return;
 
@@ -158,7 +160,9 @@ useEffect(() => {
 
     return () => clearInterval(interval);
   }, []);
-
+useEffect(() => {
+   console.log("Mounted");
+}, []);
   if (status === "loading") {
     return (
       <div className="min-h-screen bg-slate-950 flex items-center justify-center text-white text-xl">
